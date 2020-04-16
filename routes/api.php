@@ -20,7 +20,7 @@ use App\nota;
 });*/
 
 Route::get('notas', 'NotaController@index');
-Route::get('notas/{id}', 'NotaController@show');
+Route::get('notas/{nota}', 'NotaController@show');
 Route::post('notas', 'NotaController@store');
-Route::put('notas/{id}', 'NotaController@update');
-Route::delete('notas/{id}', 'NotaController@delete');
+Route::post('notas/{nota}', 'NotaController@update');
+Route::delete('notas/{nota}', 'NotaController@delete');

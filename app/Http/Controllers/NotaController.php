@@ -12,29 +12,28 @@ class NotaController extends Controller
         return nota::all();
     }
 
-    public function show($id)
+    public function show(nota $nota)
     {
-        return nota::find($id);
+        return $nota;
     }
 
     public function store(Request $request)
     {
-        return nota::create($request->all());
+        $nota = nota::create($request->all());
+        return response()->json($nota, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, nota $nota)
     {
-        $nota = nota::findOrFail($id);
         $nota->update($request->all());
 
-        return $nota;
+        return response()->json($nota, 200);
     }
 
-    public function delete(Request $request, $id)
+    public function delete(nota $nota)
     {
-        $nota = nota::findOrFail($id);
         $nota->delete();
 
-        return 204;
+        return response()->json(null, 204);
     }
 }
