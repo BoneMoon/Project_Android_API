@@ -19,8 +19,12 @@ use App\nota;
     return $request->user();
 });*/
 
-Route::get('notas', 'NotaController@index');
-Route::get('notas/{nota}', 'NotaController@show');
-Route::post('notas', 'NotaController@store');
-Route::post('notas/{nota}', 'NotaController@update');
-Route::delete('notas/{nota}', 'NotaController@delete');
+Route::get('notas', 'NotaController@index')->middleware('loginCheck');
+Route::get('notas/{nota}', 'NotaController@show')->middleware('loginCheck');
+Route::post('notas', 'NotaController@store')->middleware('loginCheck');
+Route::post('notas/{nota}', 'NotaController@update')->middleware('loginCheck');
+Route::delete('notas/{nota}', 'NotaController@delete')->middleware('loginCheck');
+
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout');

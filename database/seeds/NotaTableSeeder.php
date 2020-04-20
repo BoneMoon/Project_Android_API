@@ -18,6 +18,8 @@ class NotaTableSeeder extends Seeder
             'descricao' => Str::random(10),
             'tipodescricao' => Str::random(10),
             'foto' => Str::random(10),
+            'localizacao' => Str::random(10),
+            'user_id' => 1
         ]);
     }
 }

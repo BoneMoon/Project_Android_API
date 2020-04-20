@@ -19,6 +19,9 @@ class CreateNotasTable extends Migration
             $table->string('descricao');
             $table->string('tipodescricao');
             $table->string('foto');
+            $table->string('localizacao');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
