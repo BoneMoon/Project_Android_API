@@ -60,7 +60,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $user = User::where('api_token', $request->header('api_token'))->first();
+        $user = User::where('api_token', $request->header('Authorization'))->first();
 
         if ($user) {
             $user->api_token = null;

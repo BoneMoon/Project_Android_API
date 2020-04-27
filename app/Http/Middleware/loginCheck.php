@@ -16,10 +16,10 @@ class loginCheck
      */
     public function handle($request, Closure $next)
     {
-        if ($request->header('api_token') === null) {
+        if ($request->header('Authorization') === null) {
             return response()->json(['error' => '403'], 403);
         }
-        $user = User::where('api_token', $request->header('api_token'))->first();
+        $user = User::where('api_token', $request->header('Authorization'))->first();
         if (!$user) {
             return response()->json(['error' => '403'], 403);
         }
