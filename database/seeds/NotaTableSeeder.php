@@ -14,11 +14,12 @@ class NotaTableSeeder extends Seeder
     public function run()
     {
         DB::table('notas')->insert([
-            'titulo' => Str::random(10),
-            'descricao' => Str::random(10),
-            'tipodescricao' => Str::random(10),
+            'titulo' => 'titulo1',
+            'descricao' => 'descricao1',
+            'tipodescricao' => 'tipo1',
             'foto' => Str::random(10),
-            'localizacao' => Str::random(10),
+            'latitude' => 1.786,
+            'longitude' => 3.786,
             'user_id' => 1
         ]);
     }
