@@ -52,12 +52,15 @@ class LoginController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ]);
+
         if ($validator->fails()) {
             return response()->json(['erro' => "ERROU de novo"], 400);
         }
+
         $user = User::where('email', $request->email)->first();
-        $password = $user->password;
-        if (Hash::check($request->input('password'), $password)) {
+
+        if (Hash::check($request->input('password'), $user->password)) {
+            $user->generateToken();
             return $user;
         } else {
             return response()->json(['erro' => "utilizador não encontrado"], 400);
