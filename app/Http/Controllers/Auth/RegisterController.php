@@ -81,7 +81,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    /* public function register(Request $request)
+    /*public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
@@ -93,12 +93,12 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
-    }
+    }*/
 
     protected function registered(Request $request, $user)
     {
         $user->generateToken();
 
         return response()->json(['data' => $user->toArray()], 201);
-    }*/
+    }
 }
