@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -44,21 +45,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $data)
+    public function login(Request $request)
     {
-        /*$this->validateLogin($request);
-
-        if ($this->attemptLogin($request)) {
-            $user = $this->guard()->user();
-            $user->generateToken();
-
-            return response()->json([
-                'data' => $user->toArray(),
-            ]);
+        $validator = Validator::make($request->toArray(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['erro' => "ERROU de novo"], 400);
         }
-
-        return $this->sendFailedLoginResponse($request);*/
-        $data->validate([
+        $user = User::where('email', $request->email)->first();
+        $password = $user->password;
+        if (Hash::check($request->input('password'), $password)) {
+            return $user;
+        } else {
+            return response()->json(['erro' => "utilizador não encontrado"], 400);
+        }
+        /*$data->validate([
             "name" => "required",
             "email" => "required|email",
             "password" => "required",
@@ -72,26 +76,26 @@ class LoginController extends Controller
 
         $token = Str::random(40);
         $user->update(['api_token' => $token]);
-        return ["token" => $token];
+        return ["token" => $token];*/
     }
 
-    public function logout(Request $data)
+    public function logout(Request $request)
     {
-        $user = User::where('api_token', $data->header('Authorization'))->first();
+        $user = User::where('api_token', $request->header('Authorization'))->first();
 
-        if (!$user) {
+        /*if (!$user) {
             return ["logout" => ["Utilizador não encontrado"]];
         }
         $user->update(["api_token" => null]);
-        return 204;
+        return 204;*/
 
-        /*if ($user) {
+        if ($user) {
             $user->api_token = null;
             $user->save();
         } else {
             return response()->json(['data' => 'User not found'], 404);
         }
 
-        return response()->json(['data' => 'User logged out.'], 200);*/
+        return response()->json(['data' => 'User logged out.'], 200);
     }
 }

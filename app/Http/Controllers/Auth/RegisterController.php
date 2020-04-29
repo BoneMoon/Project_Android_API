@@ -66,6 +66,14 @@ class RegisterController extends Controller
      */
     protected function create(Request $data)
     {
+        $validator = Validator::make($data->toArray(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['erro' => "ERROU"], 400);
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
