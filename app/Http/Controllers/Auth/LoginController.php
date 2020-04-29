@@ -44,7 +44,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function login(Request $data)
     {
         /*$this->validateLogin($request);
 
@@ -58,15 +58,15 @@ class LoginController extends Controller
         }
 
         return $this->sendFailedLoginResponse($request);*/
-        $request->validate([
+        $data->validate([
             "name" => "required",
             "email" => "required|email",
             "password" => "required",
         ]);
 
-        $user = User::where("email", $request->email)->first();
+        $user = User::where("email", $data->email)->first();
 
-        if (!$user  || !Hash::check($request->password, $user->password)) {
+        if (!$user  || !Hash::check($data->password, $user->password)) {
             return ["email" => ["Credenciais Erradas"]];
         }
 
@@ -75,9 +75,9 @@ class LoginController extends Controller
         return ["token" => $token];
     }
 
-    public function logout(Request $request)
+    public function logout(Request $data)
     {
-        $user = User::where('api_token', $request->header('Authorization'))->first();
+        $user = User::where('api_token', $data->header('Authorization'))->first();
 
         if (!$user) {
             return ["logout" => ["Utilizador não encontrado"]];
