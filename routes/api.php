@@ -25,6 +25,6 @@ Route::post('notas', 'NotaController@store')->middleware('loginCheck');
 Route::post('notas/{nota}', 'NotaController@update')->middleware('loginCheck');
 Route::delete('notas/{nota}', 'NotaController@delete')->middleware('loginCheck');
 
-Route::post('register', 'Auth\RegisterController@register');
+Route::post('register', 'Auth\RegisterController@create');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');

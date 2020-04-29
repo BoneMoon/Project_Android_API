@@ -64,7 +64,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $data)
     {
         return User::create([
             'name' => $data['name'],
@@ -73,7 +73,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    /* public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
@@ -92,5 +92,5 @@ class RegisterController extends Controller
         $user->generateToken();
 
         return response()->json(['data' => $user->toArray()], 201);
-    }
+    }*/
 }
