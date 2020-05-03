@@ -20,10 +20,10 @@ use App\nota;
 });*/
 
 Route::get('notas', 'NotaController@index')->middleware('loginCheck');
-Route::get('notas/{nota}', 'NotaController@show')->middleware('loginCheck');
+Route::get('notas/{id}', 'NotaController@show')->middleware('loginCheck');
 Route::post('notas', 'NotaController@store')->middleware('loginCheck');
-Route::post('notas/{nota}', 'NotaController@update')->middleware('loginCheck');
-Route::delete('notas/{nota}', 'NotaController@delete')->middleware('loginCheck');
+Route::post('notas/{id}', 'NotaController@update')->middleware('loginCheck');
+Route::delete('notas/{id}', 'NotaController@delete')->middleware('loginCheck');
 
 Route::post('register', 'Auth\RegisterController@create');
 Route::post('login', 'Auth\LoginController@login');
